@@ -53,41 +53,27 @@ class _LoginState extends State<Login> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(32),
-                        topRight: Radius.circular(32))),
+                decoration:
+                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(32), topRight: Radius.circular(32))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 12, top: 32),
-                      child: Text("Get Started",
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18)),
+                      child: Text("Get Started", style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                          "Please enter your mobile number to send the OTP",
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16)),
+                      child: Text("Please enter your mobile number to send the OTP",
+                          style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0)
-                          .copyWith(top: 30, bottom: 30, left: 24, right: 24),
+                      padding: EdgeInsets.all(8.0).copyWith(top: 30, bottom: 30, left: 24, right: 24),
                       child: Container(
                         alignment: Alignment.centerLeft,
                         height: 50,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(12)),
+                        decoration: BoxDecoration(border: Border.all(color: Colors.black), borderRadius: BorderRadius.circular(12)),
                         child: TextField(
                           controller: _phone,
                           showCursor: true,
@@ -114,26 +100,16 @@ class _LoginState extends State<Login> {
                           minWidth: MediaQuery.of(context).size.width * 0.9,
                           height: 50,
                           color: Colors.green,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 42.0),
-                            child: Text("Get OTP",
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white, fontSize: 18)),
+                            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
+                            child: Text("Get OTP", style: GoogleFonts.poppins(color: Colors.white, fontSize: 18)),
                           ),
                           onPressed: () {
                             if (_phone.text.length == 10) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          OTP(_phone.text)));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => OTP(_phone.text)));
                             } else {
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                  content:
-                                      Text('Phone number should be 10 digit')));
+                              _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Phone number should be 10 digit')));
                             }
                           }),
                     ),
@@ -185,8 +161,7 @@ class _OTPState extends State<OTP> {
         print(credential.providerId + "    --------      AUTO VERIFY");
       };
 
-      final PhoneVerificationFailed verificationFailed =
-          (AuthException exception) {};
+      final PhoneVerificationFailed verificationFailed = (AuthException exception) {};
 
       await _auth.verifyPhoneNumber(
         phoneNumber: this._countryCode + this._phone.text.trim(),
@@ -202,8 +177,7 @@ class _OTPState extends State<OTP> {
   }
 
   void signIn() async {
-    final AuthCredential credential = PhoneAuthProvider.getCredential(
-        verificationId: _verificationId, smsCode: _smsCode.trim());
+    final AuthCredential credential = PhoneAuthProvider.getCredential(verificationId: _verificationId, smsCode: _smsCode.trim());
     _signInWithCredential(credential);
   }
 
@@ -220,10 +194,7 @@ class _OTPState extends State<OTP> {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => Login()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Login()));
             }),
       ),
       body: Container(
@@ -245,10 +216,7 @@ class _OTPState extends State<OTP> {
                     Padding(
                       padding: const EdgeInsets.all(8.0).copyWith(bottom: 0),
                       child: Text("Verify Your Mobile Number",
-                          style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16)),
+                          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                     ),
                     Image.asset('assets/login.png', width: 250, height: 250)
                   ],
@@ -259,31 +227,20 @@ class _OTPState extends State<OTP> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(32),
-                        topRight: Radius.circular(32))),
+                decoration:
+                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(32), topRight: Radius.circular(32))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 12, top: 32),
-                      child: Text("Otp Verification",
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18)),
+                      child: Text("Otp Verification", style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                          "Please enter OTP sent to your mobile number +91 ${_phone.text}",
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16)),
+                      child: Text("Please enter OTP sent to your mobile number +91 ${_phone.text}",
+                          style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
                     ),
                     SizedBox(
                       height: 20,
@@ -306,12 +263,8 @@ class _OTPState extends State<OTP> {
                         pinBoxWidth: 45,
                         pinBoxHeight: 45,
                         wrapAlignment: WrapAlignment.spaceAround,
-                        pinBoxDecoration:
-                            ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                        pinTextStyle: TextStyle(
-                            fontSize: 22.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        pinBoxDecoration: ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                        pinTextStyle: TextStyle(fontSize: 22.0, color: Colors.black, fontWeight: FontWeight.bold),
                         keyboardType: TextInputType.number,
                       ),
                     ),
@@ -323,19 +276,13 @@ class _OTPState extends State<OTP> {
                       children: [
                         Text(
                           "Didn't receive the code? ",
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16),
+                          style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
                         ),
                         TextButton(
                             onPressed: verifyPhone,
                             child: Text(
                               "RESEND",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
+                              style: GoogleFonts.poppins(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16),
                             ))
                       ],
                     ),
@@ -348,23 +295,19 @@ class _OTPState extends State<OTP> {
                           minWidth: MediaQuery.of(context).size.width * 0.9,
                           height: 50,
                           color: Colors.green,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 42.0),
+                            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
                             child: Text(
                               "LogIn",
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white, fontSize: 18),
+                              style: GoogleFonts.poppins(color: Colors.white, fontSize: 18),
                             ),
                           ),
                           onPressed: () {
                             if (_smsCode.length == 6) {
                               signIn();
                             } else {
-                              Fluttertoast.showToast(
-                                  msg: 'Please enter a valid OTP');
+                              Fluttertoast.showToast(msg: 'Please enter a valid OTP');
                             }
                           }),
                     ),
@@ -387,15 +330,9 @@ class _OTPState extends State<OTP> {
       if (user != null) {
         await UserProvider.getRegion();
         if (UserProvider.pincode != null) {
-          await Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => HomeScreen()));
+          await Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
         } else {
-          await Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => SelectRegion()));
+          await Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => SelectRegion()));
         }
       } else {
         print('ccv');

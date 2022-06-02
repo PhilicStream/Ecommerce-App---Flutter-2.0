@@ -10,17 +10,12 @@ class ChatBot extends StatefulWidget {
 
 class _ChatBotState extends State<ChatBot> {
   void response(query) async {
-    AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/atus-kart.json").build();
-    Dialogflow dialogflow =
-        Dialogflow(language: Language.english, authGoogle: authGoogle);
+    AuthGoogle authGoogle = await AuthGoogle(fileJson: "assets/atus-kart.json").build();
+    Dialogflow dialogflow = Dialogflow(language: Language.english, authGoogle: authGoogle);
 
     AIResponse aiResponse = await dialogflow.detectIntent(query).then((value) {
       setState(() {
-        messsages.insert(0, {
-          "data": 0,
-          "message": value.getListMessage()[0]["text"]["text"][0].toString()
-        });
+        messsages.insert(0, {"data": 0, "message": value.getListMessage()[0]["text"]["text"][0].toString()});
       });
     }).catchError((onError) {
       print(onError.toString());
@@ -44,16 +39,16 @@ class _ChatBotState extends State<ChatBot> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Color(0xff6fb840),
+          backgroundColor: const Color(0xff6fb840),
           title: ListTile(
-            title: Text(
+            title: const Text(
               'Chat Bot',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: const TextStyle(color: Colors.white, fontSize: 20),
             ),
-            contentPadding: EdgeInsets.all(0),
+            contentPadding: const EdgeInsets.all(0),
             subtitle: Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 4,
                   backgroundColor: Colors.lightGreen,
                 ),
@@ -71,29 +66,25 @@ class _ChatBotState extends State<ChatBot> {
                 child: Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   reverse: true,
                   itemCount: messsages.length,
-                  itemBuilder: (context, index) => chat(
-                      messsages[index]["message"].toString(),
-                      messsages[index]["data"])),
+                  itemBuilder: (context, index) => chat(messsages[index]["message"].toString(), messsages[index]["data"])),
             )),
             Container(
-              decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(blurRadius: 1, color: Colors.grey)],
-                  color: Colors.white),
+              decoration: const BoxDecoration(boxShadow: [const BoxShadow(blurRadius: 1, color: Colors.grey)], color: Colors.white),
               height: MediaQuery.of(context).size.height * 0.08,
               child: ListTile(
                 title: Container(
                   height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    color: Color.fromRGBO(220, 220, 220, 1),
+                  decoration: const BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    color: const Color.fromRGBO(220, 220, 220, 1),
                   ),
-                  padding: EdgeInsets.only(left: 15),
+                  padding: const EdgeInsets.only(left: 15),
                   child: TextFormField(
                     controller: messageInsert,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Enter a Message...",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
@@ -102,12 +93,12 @@ class _ChatBotState extends State<ChatBot> {
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                     ),
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                     onChanged: (value) {},
                   ),
                 ),
                 trailing: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.send,
                       color: Colors.blue,
                     ),
@@ -116,8 +107,7 @@ class _ChatBotState extends State<ChatBot> {
                         print("empty message");
                       } else {
                         setState(() {
-                          messsages.insert(
-                              0, {"data": 1, "message": messageInsert.text});
+                          messsages.insert(0, {"data": 1, "message": messageInsert.text});
                         });
                         response(messageInsert.text);
                         messageInsert.clear();
@@ -137,41 +127,38 @@ class _ChatBotState extends State<ChatBot> {
 
   Widget chat(String message, int data) {
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 8),
+      padding: const EdgeInsets.only(left: 20, right: 8),
       child: Row(
-        mainAxisAlignment:
-            data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           data == 0
               ? Container(
                   child: CircleAvatar(
                     backgroundColor: Colors.grey.shade300,
-                    child: Icon(Icons.support_agent_outlined),
+                    child: const Icon(Icons.support_agent_outlined),
                   ),
                 )
               : Container(),
           Padding(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Bubble(
-                radius: Radius.circular(8.0),
+                radius: const Radius.circular(8.0),
                 color: data == 0 ? Colors.grey.shade300 : Colors.blue,
                 elevation: 0.0,
                 child: Padding(
-                  padding: EdgeInsets.all(0.0),
+                  padding: const EdgeInsets.all(0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         width: 10.0,
                       ),
                       Flexible(
                           child: Container(
-                        constraints: BoxConstraints(maxWidth: 200),
+                        constraints: const BoxConstraints(maxWidth: 200),
                         child: Text(
                           message,
-                          style: TextStyle(
-                              color: data == 0 ? Colors.black : Colors.white,
-                              fontWeight: FontWeight.w500),
+                          style: TextStyle(color: data == 0 ? Colors.black : Colors.white, fontWeight: FontWeight.w500),
                         ),
                       ))
                     ],
@@ -180,7 +167,7 @@ class _ChatBotState extends State<ChatBot> {
           ),
           data == 1
               ? Container(
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     backgroundColor: Colors.blue,
                     child: Icon(
                       Icons.person_outline,

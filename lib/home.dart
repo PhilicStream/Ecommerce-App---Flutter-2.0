@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white10.withOpacity(0.95),
       drawer: buildContainer(context, url),
       appBar: AppBar(
-        backgroundColor: Color(0xff6fb840),
+        backgroundColor: const Color(0xff6fb840),
         elevation: 1,
         leading: IconButton(
           icon: Image.asset(
@@ -61,67 +61,59 @@ class _HomeScreenState extends State<HomeScreen> {
         title: StreamBuilder<DocumentSnapshot>(
             stream: dataProvider.profile(),
             builder: (context, snapshot) {
-              return GestureDetector(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Delivery Address',
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white,
-                          fontSize: 12),
-                    ),
-                    Text(
-                      '${snapshot.data['region']}',
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 16),
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => SelectRegion()));
-                },
-              );
+              if (snapshot.hasData) {
+                return GestureDetector(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Delivery Address',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.normal, color: Colors.white, fontSize: 12),
+                      ),
+                      Text(
+                        '${snapshot.data['region']}',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => SelectRegion()));
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return const Text('Error');
+              } else {
+                return const CircularProgressIndicator();
+              }
             }),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(45.0),
+          preferredSize: const Size.fromHeight(45.0),
           child: Padding(
             padding: const EdgeInsets.all(10.0).copyWith(top: 2, bottom: 5),
             child: Container(
-              padding: EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 8),
               height: 38,
               // width: 0.75*MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(02)),
-                  border: Border.all(color: Colors.white),
-                  color: Colors.white),
+                  borderRadius: const BorderRadius.all(Radius.circular(02)), border: Border.all(color: Colors.white), color: Colors.white),
               child: TextField(
                 showCursor: true,
                 textAlign: TextAlign.left,
                 readOnly: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.search_rounded,
                     color: Color(0xffA0CD4A),
                   ),
                   border: InputBorder.none,
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Color(0xFF666666),
                   ),
                   hintText: "Search your products",
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => Search()));
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Search()));
                 },
               ),
             ),
@@ -129,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications_active,
               color: Colors.white,
               size: 30,
@@ -140,9 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView(
         shrinkWrap: true,
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         children: [
-          SizedBox(height: 1),
+          const SizedBox(height: 1),
           StreamBuilder<QuerySnapshot>(
               stream: dataProvider.banners('slide'),
               builder: (context, snapshot) {
@@ -161,8 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(top: 12, left: 8, bottom: 12),
                   child: Text(
                     'Shop By Category',
-                    style: GoogleFonts.poppins(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 StreamBuilder<QuerySnapshot>(
@@ -176,9 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: GridView.builder(
                               shrinkWrap: true,
                               itemCount: snapshot.data?.documents.length,
-                              physics: BouncingScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                              physics: const BouncingScrollPhysics(),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 childAspectRatio: 3 / 3.3,
                               ),
@@ -189,10 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                FilterProduct(
-                                                    snapshot: snapshot.data
-                                                        .documents[index])));
+                                            builder: (BuildContext context) => FilterProduct(snapshot: snapshot.data.documents[index])));
                                   },
                                 );
                               },
@@ -201,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                       return Column(
-                        children: [
+                        children: const [
                           CircularProgressIndicator(
                             strokeWidth: 3,
                           ),
@@ -221,18 +208,37 @@ class _HomeScreenState extends State<HomeScreen> {
           StreamBuilder<QuerySnapshot>(
               stream: dataProvider.category(),
               builder: (context, snapshot) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data.documents.length,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return HomeProducts(
-                      snapshot: snapshot.data.documents[index],
-                    );
-                  },
-                );
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data.documents.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return HomeProducts(
+                        snapshot: snapshot.data.documents[index],
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return const Text('Error');
+                } else {
+                  return Column(
+                    children: const [
+                      CircularProgressIndicator(
+                        strokeWidth: 3,
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        'Loading...',
+                        style: TextStyle(fontSize: 18),
+                      )
+                    ],
+                  );
+                }
               }),
-          SizedBox(height: 20)
+          const SizedBox(height: 20)
         ],
       ),
       bottomNavigationBar: BNavigation(_scaffoldKey),
@@ -246,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: MediaQuery.of(context).size.height,
       child: ListView(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           GestureDetector(
@@ -254,16 +260,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               width: 110,
               height: 110,
-              padding: EdgeInsets.all(4),
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
               child: Neumorphic(
                 style: NeumorphicStyle(
                     depth: 10,
                     color: Colors.white,
-                    boxShape: NeumorphicBoxShape.circle(),
-                    shadowLightColor: Color(0xff6fb840).withOpacity(0.1)),
-                padding: EdgeInsets.all(0),
+                    boxShape: const NeumorphicBoxShape.circle(),
+                    shadowLightColor: const Color(0xff6fb840).withOpacity(0.1)),
+                padding: const EdgeInsets.all(0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(70.0),
                   child: UserProvider.profile != null && url.isNotEmpty
@@ -271,11 +276,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           imageUrl: UserProvider.profile,
                           fit: BoxFit.contain,
                         )
-                      : CircleAvatar(
+                      : const CircleAvatar(
                           radius: 67,
                           backgroundColor: Color(0xff6fb840),
-                          child:
-                              Icon(Icons.person, size: 45, color: Colors.white),
+                          child: Icon(Icons.person, size: 45, color: Colors.white),
                         ),
                 ),
               ),
@@ -286,10 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
                 child: Text(
               UserProvider.name ?? 'Guest',
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.black),
+              style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
             )),
           ),
           Padding(
@@ -300,101 +301,69 @@ class _HomeScreenState extends State<HomeScreen> {
               style: GoogleFonts.poppins(fontSize: 14, color: Colors.black),
             )),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.home_outlined,
               color: Colors.black,
             ),
-            title: Text('Home',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
+            title: Text('Home', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
             onTap: () {
               Navigator.pop(context);
             },
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-            trailing: Icon(
+            contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+            trailing: const Icon(
               Icons.navigate_next,
               color: Colors.black,
             ),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.person_outline,
               color: Colors.black,
             ),
-            title: Text('Account',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
+            title: Text('Account', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => Profile()));
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Profile()));
             },
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-            trailing: Icon(
+            contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+            trailing: const Icon(
               Icons.navigate_next,
               color: Colors.black,
             ),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.shopping_bag_outlined,
               color: Colors.black,
             ),
-            title: Text('Orders',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
+            title: Text('Orders', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => MyOrders()));
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MyOrders()));
             },
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-            trailing: Icon(
+            contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+            trailing: const Icon(
               Icons.navigate_next,
               color: Colors.black,
             ),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.support_agent,
               color: Colors.black,
             ),
-            title: Text('Contact US',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
+            title: Text('Contact US', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => ChatBot()));
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => ChatBot()));
             },
-            trailing: Icon(
+            trailing: const Icon(
               Icons.navigate_next,
               color: Colors.black,
             ),
           ),
           ListTile(
-            title: Text('Sign Out',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
-            leading: Icon(
+            title: Text('Sign Out', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
+            leading: const Icon(
               Icons.logout,
               color: Colors.black,
             ),
@@ -402,25 +371,17 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.pop(context);
               pickImage();
             },
-            trailing: Icon(
+            trailing: const Icon(
               Icons.navigate_next,
               color: Colors.black,
             ),
           ),
           ListTile(
-            title: Text('Terms of Use',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
+            title: Text('Terms of Use', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
             onTap: () {},
           ),
           ListTile(
-            title: Text('Privacy policy',
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16)),
+            title: Text('Privacy policy', style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
             onTap: () {},
           ),
         ],
@@ -433,20 +394,20 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         builder: (context) => Center(
               child: Card(
-                margin: EdgeInsets.symmetric(horizontal: 34),
+                margin: const EdgeInsets.symmetric(horizontal: 34),
                 child: Padding(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Center(
-                        child: Icon(
+                      const Center(
+                        child: const Icon(
                           Icons.info_outline,
                           size: 65,
                           color: Colors.redAccent,
                         ),
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 8, right: 8),
                         child: Text(
@@ -455,7 +416,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -476,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Navigator.pop(context);
                                 }),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Container(
                             child: MaterialButton(
                                 elevation: 0,
@@ -494,11 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   FirebaseAuth auth = FirebaseAuth.instance;
                                   await auth.signOut();
                                   Navigator.pop(context);
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Login()));
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Login()));
                                 }),
                           ),
                         ],

@@ -97,12 +97,7 @@ class _BNavigationState extends State<BNavigation> {
             Icons.home_outlined,
             color: Colors.green,
           ),
-          title: Text(
-            'Home',
-            style: GoogleFonts.poppins(
-                color: index == 0 ? Colors.green : Colors.grey,
-                fontWeight: FontWeight.w500),
-          ),
+          label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -113,12 +108,7 @@ class _BNavigationState extends State<BNavigation> {
             Icons.apps_outlined,
             color: Colors.green,
           ),
-          title: Text(
-            'Category',
-            style: GoogleFonts.poppins(
-                color: index == 1 ? Colors.green : Colors.grey,
-                fontWeight: FontWeight.w500),
-          ),
+          label: 'Category',
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -129,12 +119,7 @@ class _BNavigationState extends State<BNavigation> {
             Icons.search_outlined,
             color: Colors.green,
           ),
-          title: Text(
-            'Search',
-            style: GoogleFonts.poppins(
-                color: index == 2 ? Colors.green : Colors.grey,
-                fontWeight: FontWeight.w500),
-          ),
+          label: 'Search',
         ),
         BottomNavigationBarItem(
           icon: StreamBuilder<QuerySnapshot>(
@@ -222,12 +207,7 @@ class _BNavigationState extends State<BNavigation> {
               child: Icon(
                 Icons.shopping_bag_outlined,
               )),
-          title: Text(
-            'Cart',
-            style: GoogleFonts.poppins(
-                color: index == 3 ? Colors.green : Colors.grey,
-                fontWeight: FontWeight.w500),
-          ),
+          label: 'Cart',
         ),
         BottomNavigationBarItem(
           icon: Icon(
@@ -238,12 +218,7 @@ class _BNavigationState extends State<BNavigation> {
             Icons.person_outline,
             color: Colors.green,
           ),
-          title: Text(
-            'Profile',
-            style: GoogleFonts.poppins(
-                color: index == 2 ? Colors.blueAccent[200] : Colors.grey,
-                fontWeight: FontWeight.w500),
-          ),
+          label: 'Profile',
         ),
       ],
     );
